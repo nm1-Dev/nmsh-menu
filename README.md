@@ -1,70 +1,140 @@
-# nmsh-menu
-Menu System for the QBCore Framework
+# 🎛️ Nmsh Menu — Clean, Modern FiveM UI Menu (NoPixel 4.0 Inspired)
 
-# My Discord Server
-https://discord.gg/AXEVAqH7yX
+> A **NoPixel 4.0–inspired**, **FiveM menu interface** built for performance, visual clarity, and flexibility.  
+> Designed and optimized for **QBCore** Servers
 
-![Uploading image.png…](https://cdn.discordapp.com/attachments/1195409963024142346/1195409963544215643/image.png?ex=65b3e348&is=65a16e48&hm=6e6668fc0202973c29a25a29e835fd48e830e9fbcdb2029e0de6eead72185570&)
+---
 
+## 🖼️ Preview
 
---[[
-EXAMPLE MENU
---]]
+> [[Watch a Preview]](https://www.youtube.com/watch?v=zw-X6iO8R6Y)
 
-```
-RegisterCommand("qbmenutest", function(source, args, raw)
-    openMenu({
+---
+
+## 🚀 Features
+ 
+- 🪄 **Dynamic Button System** – easily add headers, icons, emojis, or right-side icons  
+- 💎 **NoPixel 4.0 Inspired Design**
+- 💡 **Custom Styling** – uses `--nmsh-` CSS variables for full theme control
+- 🧩 **Simple Lua Integration** – export-based system, framework-independent  
+
+---
+
+## 📂 Installation
+1. **Download** the script and **Rename** it to `qb-menu`
+2. **Place** the folder inside your `resources/[qb]` directory.  
+3. Add the following line to your **server.cfg**:  
+   ```cfg
+   ensure qb-menu
+   ```
+4. Restart your server — and you’re ready to go.
+
+---
+
+## 🧠 Example Usage
+
+Here’s a simple example showing how to create a custom interactive menu:
+
+```lua
+RegisterCommand('testmenu', function()
+    exports['nmsh-menu']:openMenu({
         {
-            header = "Main Title",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            header = "Main Menu",
+            icon = "fas fa-mug-hot",
+            isMenuHeader = true
         },
         {
-            header = "Sub Menu Button",
-            txt = "This goes to a sub menu",
-            params = {
-                event = "qb-menu:client:testMenu2",
-                args = {
-                    number = 1,
-                }
-            }
-        },
-        {
-            header = "Sub Menu Button",
-            txt = "This goes to a sub menu",
+            header = "Cola",
             disabled = true,
-            -- hidden = true, -- doesnt create this at all if set to true
+            icon = "fas fa-water",
             params = {
                 event = "qb-menu:client:testMenu2",
-                args = {
-                    number = 1,
-                }
+                args = { item = "cola" }
             }
         },
-    })
-end)
-```
-```
-RegisterNetEvent('qb-menu:client:testMenu2', function(data)
-    local number = data.number
-    openMenu({
         {
-            header = "< Go Back",
-        },
-        {
-            header = "Number: "..number,
-            txt = "Other",
+            header = "Water",
+            icon = "fas fa-water",
+            rtIcon = "fa-solid fa-chevron-right",
+            text = "Fresh H2O 💧",
             params = {
-                event = "qb-menu:client:testButton",
-                args = {
-                    message = "This was called by clicking this button"
-                }
+                event = "qb-menu:client:testMenu2",
+                args = { item = "water" }
+            }
+        },
+        {
+            header = "Cheese Burger Combo",
+            text = "Tomato 🍅 <br> Cheese 🧀 <br> Orange Juice 🍹 <br> Fries 🍟",
+            rtIcon = "🍔",
+            icon = "fas fa-utensils",
+            params = {
+                event = "qb-menu:client:testMenu2",
+                args = { combo = "burger" }
+            }
+        },
+        {
+            header = "Order Shawarma",
+            params = {
+                event = "qb-menu:client:testMenu2",
+                args = { item = "shawarma" }
             }
         },
     })
 end)
 ```
+
+---
+
+## 🎨 Button Customization Template
+
+Each menu button supports these parameters:
+
+| Parameter | Type | Description |
+|------------|------|-------------|
+| `header` | string | The visible title of the button |
+| `text` | string (optional) | A small description or HTML break text |
+| `icon` | string (optional) | FontAwesome icon (e.g. `"fas fa-water"`) |
+| `rtIcon` | string (optional) | Emoji or right-side icon |
+| `isMenuHeader` | boolean | Turns the button into a non-clickable title |
+| `disabled` | boolean | Disables button interaction |
+| `params.event` | string | The event triggered on click |
+| `params.args` | table | Arguments passed to the event |
+
+💡 If `rtIcon` is set to `"arrow"`, it automatically shows a **large background arrow**, just like **NoPixel 4.0 menus**.
+
+---
+
+## ⚙️ Styling and Customization
+
+The style system is built with centralized CSS variables to make theming easy.  
+You can modify button colors, radius, or accent tones directly in `style.css`:
+
+```css
+:root {
+  --nmsh-color-bg-dark: rgb(43, 44, 54);
+  --nmsh-color-accent: rgb(56, 236, 168);
+  --nmsh-radius: 5px;
+}
 ```
-RegisterNetEvent('qb-menu:client:testButton', function(data)
-    TriggerEvent('QBCore:Notify', data.message)
-end)
-```
+
+> Edit once — update the entire menu instantly.
+
+---
+
+## 🧩 Credits
+
+Developed & designed by **Nmsh Dev**  
+Inspired by **NoPixel 4.0**.  
+Join the Discord for support, previews, and new script updates:  
+[https://discord.gg/cvMw7hkZG9](https://discord.gg/cvMw7hkZG9)
+
+---
+
+## ❤️ Support the Project
+
+If you love this UI, leave a ⭐ on GitHub or share it with your community.  
+Your feedback drives future Nmsh Dev releases.
+
+---
+
+**#MadeByNmshDev | Precision • Performance • Perfection**

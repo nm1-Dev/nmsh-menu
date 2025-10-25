@@ -1,4 +1,5 @@
 let buttonParams = [];
+let images = [];
 
 const openMenu = (data = null) => {
     let html = "";
@@ -9,13 +10,15 @@ const openMenu = (data = null) => {
             let isMenuHeader = item.isMenuHeader;
             let isDisabled = item.disabled;
             let icon = item.icon;
-            html += getButtonRender(header, message, index, isMenuHeader, isDisabled, icon);
+            let rtIcon = item.rtIcon;
+            images[index] = item;
+            html += getButtonRender(header, message, index, isMenuHeader, isDisabled, icon, rtIcon);
             if (item.params) buttonParams[index] = item.params;
         }
     });
 
     $("#buttons").html(html);
-    $('.background').css('display', "block");
+    $('.background').fadeIn(200);
 
     $('.button').click(function() { 
         const target = $(this)
@@ -25,22 +28,40 @@ const openMenu = (data = null) => {
     });
 };
 
-const getButtonRender = (header, message = null, id, isMenuHeader, isDisabled, icon) => {
+const getButtonRender = (header, message = null, id, isMenuHeader, isDisabled, icon, rtIcon = null) => {
+    // Detect if rtIcon is an arrow (to trigger special background)
+    const isArrow = rtIcon &&  rtIcon === "fa-solid fa-chevron-right";
+
     return `
-        <div class="${isMenuHeader ? "title" : "button"} ${isDisabled ? "disabled" : ""}" id="${id}">
-            <div class="icon"> <img src=${icon} width=30px onerror="this.onerror=null; this.remove();"> <i class="${icon}" onerror="this.onerror=null; this.remove();"></i> </div>
+        <div class="${isMenuHeader ? "title" : "button"} ${isDisabled ? "disabled" : ""} ${isArrow ? "has-arrow" : ""}" id="${id}">
+            
+            ${icon ? `
+                <div class="icon">
+                    <i class="${icon}"></i>
+                </div>
+            ` : ""}
+            
             <div class="column">
-            <div class="header"> ${header}</div>
-            ${message ? `<div class="text">${message}</div>` : ""}
+                <div class="header">${header}</div>
+                ${message ? `<div class="text">${message}</div>` : ""}
             </div>
+
+            ${rtIcon ? `
+                <div class="rt-icon">
+                    ${rtIcon.startsWith("fa") ? `<i class="${rtIcon}"></i>` : `<span>${rtIcon}</span>`}
+                </div>
+            ` : ""}
         </div>
     `;
 };
 
+
+
 const closeMenu = () => {
     $("#buttons").html(" ");
-    $('.background').css('display', "none");
+    $('.background').fadeOut(100);
     buttonParams = [];
+    images = [];
 };
 
 const postData = (id) => {
@@ -52,7 +73,6 @@ const cancelMenu = () => {
     $.post(`https://${GetParentResourceName()}/closeMenu`);
     return closeMenu();
 };
-
 
 
 window.addEventListener("message", (event) => {
@@ -69,6 +89,21 @@ window.addEventListener("message", (event) => {
             return;
     }
 });
+
+window.addEventListener('mousemove', (event) => {
+    let $target = $(event.target);
+    if ($target.closest('.button:hover').length && $('.button').is(":visible")) {
+        let id = event.target.id;
+        if (!images[id]) return
+        if (images[id].image) {
+            $('#image').attr('src', images[id].image);
+            $('#imageHover').css('display' , 'block');
+        }
+    }
+    else {
+        $('#imageHover').css('display' , 'none');
+    }
+})
 
 document.onkeyup = function (event) {
     const charCode = event.key;

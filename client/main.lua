@@ -74,6 +74,11 @@ RegisterNUICallback('clickedButton', function(option, cb)
     if sendData then
         local data = sendData[tonumber(option)]
         sendData = nil
+        if data.action ~= nil then
+            data.action()
+            cb('ok')
+            return
+        end
         if data then
             if data.params.event then
                 if data.params.isServer then
@@ -92,6 +97,7 @@ RegisterNUICallback('clickedButton', function(option, cb)
     end
     cb('ok')
 end)
+
 
 RegisterNUICallback('closeMenu', function(_, cb)
     headerShown = false
@@ -126,11 +132,10 @@ RegisterCommand('testmenu', function(args, rawCommand)
             icon = "fas fa-mug-hot",
             isMenuHeader = true, -- Set to true to make a nonclickable title
         },
-        {
-            header = "Eat Some Food",
-            txt = "This goes to a sub menu",
-            icon = "fas fa-box",
+                {
+            header = "Cola",
             disabled = true, -- Set to true to disable the button
+            icon = "fas fa-water",
             params = {
                 event = "qb-menu:client:testMenu2",
                 args = {
@@ -139,9 +144,11 @@ RegisterCommand('testmenu', function(args, rawCommand)
             }
         },
         {
-            header = "Nmsh Is A Poor Developer",
-            txt = "This goes to a sub menu",
-            icon = "fas fa-box",
+            header = "Water",
+            disabled = false, -- Set to true to disable the button
+            icon = "fas fa-water",
+            rtIcon = "fa-solid fa-chevron-right",
+            text = "Fresh H2O 💧",
             params = {
                 event = "qb-menu:client:testMenu2",
                 args = {
@@ -150,9 +157,21 @@ RegisterCommand('testmenu', function(args, rawCommand)
             }
         },
         {
-            header = "Nmsh",
-            txt = "Poor developer",
-            icon = "fas fa-crosshairs",
+            header = "Cheese Burger Combo",
+            disabled = false, -- Set to true to disable the button
+            text = "Tomato 🍅 <br> Cheese 🧀 <br> Orange Juice 🍹 <br> Fries 🍟",
+            rtIcon = "🍔", -- or icon or nil
+            icon = "fas fa-add",
+            params = {
+                event = "qb-menu:client:testMenu2",
+                args = {
+                    number = 1,
+                }
+            }
+        },
+        {
+            header = "Order Shawrma",
+            disabled = false, -- Set to true to disable the button
             params = {
                 event = "qb-menu:client:testMenu2",
                 args = {
