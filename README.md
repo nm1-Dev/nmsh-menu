@@ -7,7 +7,7 @@
 
 ## 🖼️ Preview
 
-> [[Watch a Preview]](https://www.youtube.com/watch?v=zw-X6iO8R6Y)
+> [[Watch a Preview]]((https://youtu.be/6P_iCqIK_TU))
 
 ---
 
