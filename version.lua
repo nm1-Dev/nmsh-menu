@@ -34,7 +34,7 @@ function versionCheck(repository)
                 local current, minimum = tonumber(cv[i]), tonumber(lv[i])
 
                 if current ~= minimum then
-                    if current > minimum then
+                    if current < minimum then
                         return print(('^3An update is available for %s (current version: %s)\r\n%s^0'):format(resource, currentVersion, response.html_url))
                     else break end
                 end
