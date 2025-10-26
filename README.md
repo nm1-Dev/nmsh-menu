@@ -55,7 +55,7 @@ RegisterCommand('testmenu', function()
         {
             header = "Water",
             icon = "fas fa-water",
-            rtIcon = "fa-solid fa-chevron-right",
+            rtIcon = "arrow",
             text = "Fresh H2O 💧",
             params = {
                 event = "qb-menu:client:testMenu2",
