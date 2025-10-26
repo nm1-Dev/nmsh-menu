@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'Nmsh-Menu V.2 (NoPixel 4.0 Inspired)'
-version '2.0.1'
+version '2.0.2'
 
 client_script 'client/main.lua'
 
